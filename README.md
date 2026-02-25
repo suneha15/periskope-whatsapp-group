@@ -79,15 +79,14 @@ Only `/`, `/groups`, and `/help` are implemented; other nav links are placeholde
 ### 3.3 Top bar (header)
 
 - **Left:** Grid icon and the label “groups”.
-- **Right:** Docs (with document icon), phone number “+91 90043 89372” (with phone icon), and a circular profile/avatar icon.
+- **Right:** Docs (with document icon), phone number (with phone icon), and a profile/avatar icon.
 
-The top bar spans only the content area (to the right of the sidebar). Search is **not** in the top bar; it lives in the **Groups** table toolbar (see below).
 
 ### 3.4 Main content (by route)
 
 - **`/` (Dashboard):** Simple landing with a link to Groups.
 - **`/groups`:**  
-  - **Toolbar row:** “# groups”, Supabase/Mock data badge, **Q Search** (search input with magnifying glass), Filter, Bulk message, Group Actions.  
+  - **Toolbar row:** “# groups”, Supabase/Mock data badge, **Search** (search input with magnifying glass), Filter, Bulk message, Group Actions.  
   - **Table:** Scrollable list of groups (checkbox, name, project, labels, members, last active). Rows are clickable; the selected row is highlighted.  
   - **Right panel:** Shows details for the selected group (icon, name, Refresh). Tabs: Overview (active), Members, Logs. Overview shows last active, disappearing messages, send permission, project, labels, Export Chat, Exit Group, and an issue card (e.g. PER-011). All actions are UI-only.
 - **`/help`:** Help & Support page with WhatsApp support card, contact details, and FAQ.
@@ -136,10 +135,11 @@ types/
 
 Use `.env.example` as a template; copy it to `.env.local` and fill in the values:
 
-| Variable                         | Description                                  |
-|----------------------------------|----------------------------------------------|
-| `NEXT_PUBLIC_SUPABASE_URL`       | Supabase project URL (e.g. `https://xxxx.supabase.co`) |
-| `NEXT_PUBLIC_SUPABASE_ANON_KEY`  | Supabase anon (publishable) API key          |
+->Variable : 
+  `NEXT_PUBLIC_SUPABASE_URL` : Supabase project URL (e.g. `https://xxxx.supabase.co`)
+
+->Description :      
+ `NEXT_PUBLIC_SUPABASE_ANON_KEY` : Supabase anon (publishable) API key     
 
 Example (from [.env.example](.env.example)):
 
@@ -152,20 +152,6 @@ If these are not set, the app runs entirely on mock data.
 
 ---
 
-## 6. Notes and assumptions
 
-- **Navigation:** Only `/`, `/groups`, and `/help` are implemented. Other sidebar links are UI-only.
-- **Search / Filter / Actions:** Q Search, Filter, Bulk message, Group Actions, Export Chat, Exit Group, and Add Label are UI-only (no backend).
-- **Auth:** None. RLS on `groups` allows public read for demo; restrict in production.
-- **Single context:** UI assumes one phone/workspace; no multi-tenant switching.
 
----
 
-## 7. Scripts
-
-| Command          | Description               |
-|------------------|---------------------------|
-| `npm run dev`    | Start development server  |
-| `npm run build`  | Production build          |
-| `npm run start`  | Start production server   |
-| `npm run lint`   | Run ESLint                |
