@@ -76,17 +76,23 @@ The **sidebar profile block** and the **top bar** share the same height (`h-16`)
 
 Only `/`, `/groups`, and `/help` are implemented; other nav links are placeholders.
 
+**Active sidebar styling:** The currently selected nav item (and “Help & Support” when on `/help`) is shown with a **green** highlight 
+
 ### 3.3 Top bar (header)
 
-- **Left:** Grid icon and the label “groups”.
+- **Left:** Grid icon and a **dynamic title** that matches the current page (see below).
 - **Right:** Docs (with document icon), phone number (with phone icon), and a profile/avatar icon.
 
+**Top bar title:** The label beside the grid icon reflects the active sidebar tab and route: “Dashboard” on `/`, “Groups” on `/groups` (and any `/groups/...` path), “Chats” on `/chats`, “Help & Support” on `/help`, and so on for Contacts, Logs, Files, and Settings. Unknown paths default to “Dashboard”.
+
+
+**Database tag (Groups only):** When on the Groups page, the top bar also shows the group count (e.g. "# 12 groups") and a **database tag** badge: "Supabase" (green) when data is loaded from the connected Supabase project, or "Mock data" (grey) when using fallback mock data. 
 
 ### 3.4 Main content (by route)
 
 - **`/` (Dashboard):** Simple landing with a link to Groups.
 - **`/groups`:**  
-  - **Toolbar row:** “# groups”, Supabase/Mock data badge, **Search** (search input with magnifying glass), Filter, Bulk message, Group Actions.  
+  - **Toolbar row:** “groups”, Supabase/Mock data badge, **Search** (search input), Filter, Bulk message, Group Actions.  
   - **Table:** Scrollable list of groups (checkbox, name, project, labels, members, last active). Rows are clickable; the selected row is highlighted.  
   - **Right panel:** Shows details for the selected group (icon, name, Refresh). Tabs: Overview (active), Members, Logs. Overview shows last active, disappearing messages, send permission, project, labels, Export Chat, Exit Group, and an issue card (e.g. PER-011). All actions are UI-only.
 - **`/help`:** Help & Support page with WhatsApp support card, contact details, and FAQ.

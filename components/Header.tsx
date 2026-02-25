@@ -1,11 +1,52 @@
+"use client";
+
+import { usePathname } from "next/navigation";
+import { useGroupsHeader } from "@/contexts/GroupsHeaderContext";
+
+const pathToTitle: Record<string, string> = {
+  "/": "Dashboard",
+  "/chats": "Chats",
+  "/groups": "Groups",
+  "/contacts": "Contacts",
+  "/logs": "Logs",
+  "/files": "Files",
+  "/settings": "Settings",
+  "/help": "Help & Support",
+};
+
+function getHeaderTitle(pathname: string): string {
+  if (pathname.startsWith("/groups")) return "Groups";
+  return pathToTitle[pathname] ?? "Dashboard";
+}
+
 export default function Header() {
+  const pathname = usePathname();
+  const { groupsHeader } = useGroupsHeader();
+  const title = getHeaderTitle(pathname);
+  const isGroupsPage = pathname.startsWith("/groups");
+
   return (
     <header className="flex h-16 shrink-0 items-center justify-between border-b border-zinc-200 bg-white px-4 dark:border-zinc-800 dark:bg-zinc-950">
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-3">
         <svg className="h-5 w-5 shrink-0 text-zinc-500 dark:text-zinc-400" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" aria-hidden>
           <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6A2.25 2.25 0 0 1 6 3.75h2.25A2.25 2.25 0 0 1 10.5 6v2.25a2.25 2.25 0 0 1-2.25 2.25H6a2.25 2.25 0 0 1-2.25-2.25V6ZM3.75 15.75A2.25 2.25 0 0 1 6 13.5h2.25a2.25 2.25 0 0 1 2.25 2.25V18a2.25 2.25 0 0 1-2.25 2.25H6A2.25 2.25 0 0 1 3.75 18v-2.25ZM13.5 6a2.25 2.25 0 0 1 2.25-2.25H18A2.25 2.25 0 0 1 20.25 6v2.25A2.25 2.25 0 0 1 18 10.5h-2.25a2.25 2.25 0 0 1-2.25-2.25V6ZM13.5 15.75a2.25 2.25 0 0 1 2.25-2.25H18a2.25 2.25 0 0 1 2.25 2.25V18A2.25 2.25 0 0 1 18 20.25h-2.25A2.25 2.25 0 0 1 13.5 18v-2.25Z" />
         </svg>
-        <span className="text-sm font-medium text-zinc-700 dark:text-zinc-300">groups</span>
+        <span className="text-sm font-medium text-zinc-700 dark:text-zinc-300">{title}</span>
+        {isGroupsPage && groupsHeader && (
+          <>
+            <span className="text-sm font-medium text-zinc-500 dark:text-zinc-400"># {groupsHeader.count} groups</span>
+            <span
+              title={groupsHeader.dataSource === "supabase" ? "Data loaded from Periskope Supabase project" : "Using fallback mock data (Supabase not connected or empty)"}
+              className={`rounded-full px-2 py-0.5 text-xs font-medium ${
+                groupsHeader.dataSource === "supabase"
+                  ? "bg-emerald-100 text-emerald-800 dark:bg-emerald-900/50 dark:text-emerald-200"
+                  : "bg-zinc-200 text-zinc-600 dark:bg-zinc-700 dark:text-zinc-400"
+              }`}
+            >
+              {groupsHeader.dataSource === "supabase" ? "Supabase" : "Mock data"}
+            </span>
+          </>
+        )}
       </div>
       <div className="flex items-center gap-4">
         <a

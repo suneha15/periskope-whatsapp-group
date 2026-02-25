@@ -22,29 +22,14 @@ export default function GroupsTable({
   groups,
   selectedId,
   onSelectRow,
-  dataSource,
 }: {
   groups: Group[];
   selectedId: string | null;
   onSelectRow: (group: Group) => void;
-  dataSource: "supabase" | "mock";
 }) {
   return (
     <div className="flex flex-1 flex-col overflow-hidden">
       <div className="flex shrink-0 items-center justify-between gap-4 border-b border-zinc-200 bg-white px-4 py-3 dark:border-zinc-800 dark:bg-zinc-950">
-        <div className="flex items-center gap-2">
-          <span className="text-sm font-medium text-zinc-500 dark:text-zinc-400"># groups</span>
-          <span
-            title={dataSource === "supabase" ? "Data loaded from Periskope Supabase project" : "Using fallback mock data (Supabase not connected or empty)"}
-            className={`rounded-full px-2 py-0.5 text-xs font-medium ${
-              dataSource === "supabase"
-                ? "bg-emerald-100 text-emerald-800 dark:bg-emerald-900/50 dark:text-emerald-200"
-                : "bg-zinc-200 text-zinc-600 dark:bg-zinc-700 dark:text-zinc-400"
-            }`}
-          >
-            {dataSource === "supabase" ? "Supabase" : "Mock data"}
-          </span>
-        </div>
         <div className="flex items-center gap-2">
           <div className="flex h-9 min-w-[10rem] items-center gap-2 rounded-lg border border-zinc-200 bg-zinc-50 px-3 dark:border-zinc-600 dark:bg-zinc-800">
             <svg className="h-4 w-4 shrink-0 text-zinc-400 dark:text-zinc-500" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" aria-hidden>
@@ -66,6 +51,8 @@ export default function GroupsTable({
             </svg>
             <span>Filter</span>
           </button>
+        </div>
+        <div className="flex items-center gap-2">
           <button
             type="button"
             className="flex h-9 items-center rounded-lg bg-emerald-600 px-3 text-sm font-medium text-white hover:bg-emerald-700"

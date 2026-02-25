@@ -113,11 +113,11 @@ export default function Sidebar() {
               href={item.href}
               className={`flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors ${
                 isActive
-                  ? "bg-zinc-200 text-zinc-900 dark:bg-zinc-700 dark:text-zinc-50"
+                  ? "bg-emerald-100 text-emerald-800 dark:bg-emerald-900/50 dark:text-emerald-100"
                   : "text-zinc-700 hover:bg-zinc-200 dark:text-zinc-300 dark:hover:bg-zinc-800"
               }`}
             >
-              <NavIcon name={item.icon} className={`h-5 w-5 shrink-0 ${isActive ? "text-zinc-700 dark:text-zinc-300" : ""}`} />
+              <NavIcon name={item.icon} className={`h-5 w-5 shrink-0 ${isActive ? "text-emerald-700 dark:text-emerald-300" : ""}`} />
               <span className="min-w-0 flex-1">{item.label}</span>
               {item.badge && (
                 <span className="shrink-0 rounded-full bg-emerald-500 px-2 py-0.5 text-xs font-medium text-white">
@@ -133,11 +133,11 @@ export default function Sidebar() {
           href="/help"
           className={`flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors ${
             pathname === "/help"
-              ? "bg-zinc-200 text-zinc-900 dark:bg-zinc-700 dark:text-zinc-50"
+              ? "bg-emerald-100 text-emerald-800 dark:bg-emerald-900/50 dark:text-emerald-100"
               : "text-zinc-600 hover:bg-zinc-200 dark:text-zinc-400 dark:hover:bg-zinc-800"
           }`}
         >
-          <span className={pathname === "/help" ? "text-zinc-700 dark:text-zinc-300" : "text-emerald-600 dark:text-emerald-400"}>
+          <span className={pathname === "/help" ? "text-emerald-700 dark:text-emerald-300" : "text-emerald-600 dark:text-emerald-400"}>
             <WhatsAppIcon className="h-5 w-5 shrink-0" />
           </span>
           <span>Help & Support</span>

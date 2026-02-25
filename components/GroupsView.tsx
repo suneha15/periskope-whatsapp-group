@@ -1,8 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import GroupsTable from "@/components/GroupsTable";
 import GroupSidePanel from "@/components/GroupSidePanel";
+import { useGroupsHeader } from "@/contexts/GroupsHeaderContext";
 import type { Group } from "@/types/group";
 
 export default function GroupsView({
@@ -13,6 +14,12 @@ export default function GroupsView({
   dataSource: "supabase" | "mock";
 }) {
   const [selectedGroup, setSelectedGroup] = useState<Group | null>(null);
+  const { setGroupsHeader } = useGroupsHeader();
+
+  useEffect(() => {
+    setGroupsHeader({ count: initialGroups.length, dataSource });
+    return () => setGroupsHeader(null);
+  }, [initialGroups.length, dataSource, setGroupsHeader]);
 
   return (
     <div className="flex h-full flex-1 overflow-hidden">
@@ -21,7 +28,6 @@ export default function GroupsView({
           groups={initialGroups}
           selectedId={selectedGroup?.id ?? null}
           onSelectRow={setSelectedGroup}
-          dataSource={dataSource}
         />
       </div>
       <GroupSidePanel group={selectedGroup} />
