@@ -1,4 +1,3 @@
-/** Format last_active ISO string for table display (e.g. "03:17", "Yesterday"). Use fixed locale so server and client match. */
 export function formatLastActive(iso: string): string {
   const d = new Date(iso);
   const now = new Date();

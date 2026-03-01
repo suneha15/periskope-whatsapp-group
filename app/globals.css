@@ -3,11 +3,20 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  /* Brand green: rgb(21, 128, 61) */
+  --color-brand: rgb(21, 128, 61);
+  --color-brand-hover: rgb(17, 102, 49);
+  --color-brand-light: rgb(209, 237, 218);
+  --color-brand-muted: rgb(5, 81, 32);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-brand: var(--color-brand);
+  --color-brand-hover: var(--color-brand-hover);
+  --color-brand-light: var(--color-brand-light);
+  --color-brand-muted: var(--color-brand-muted);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }

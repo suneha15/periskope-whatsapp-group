@@ -1,4 +1,3 @@
-/** Dashboard landing: entry point with link to Groups. */
 import Link from "next/link";
 
 export default function Home() {
@@ -8,7 +7,7 @@ export default function Home() {
         Dashboard
       </h1>
       <p className="text-zinc-500 dark:text-zinc-400">
-        <Link href="/groups" className="text-emerald-600 hover:underline dark:text-emerald-400">
+        <Link href="/groups" className="text-brand hover:underline dark:text-brand">
           Go to Groups
         </Link>{" "}
         to manage WhatsApp groups.

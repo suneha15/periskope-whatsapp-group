@@ -2,18 +2,21 @@ import { formatLastActive } from "@/lib/format";
 import { createSupabaseClient } from "@/lib/supabase";
 import type { Group } from "@/types/group";
 
-/** Mock groups for when Supabase is not configured or returns no data */
+function logoUrl(seed: string): string {
+  return `https://api.dicebear.com/7.x/identicon/png?seed=${encodeURIComponent(seed)}&size=80`;
+}
+
 const MOCK_GROUPS: Group[] = [
-  { id: "1", name: "Evoke <> Skope", project: "Demo", members_count: 3, last_active: new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString(), labels: ["High Value", "Priority", "Warm"], avatar_url: null, unread_count: 10, has_alert: false },
-  { id: "2", name: "Xindus Trade Network <> Periskope", project: "Clients", members_count: 8, last_active: new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString(), labels: ["Pilot", "1+"], avatar_url: null, unread_count: 17, has_alert: false },
-  { id: "3", name: "TBC <> Periskope", project: "Demo", members_count: 5, last_active: new Date(Date.now() - 3 * 60 * 60 * 1000).toISOString(), labels: ["Priority"], avatar_url: null, unread_count: 8, has_alert: true },
-  { id: "4", name: "Alpha <> Skope", project: "Demo", members_count: 4, last_active: new Date(Date.now() - 5 * 60 * 60 * 1000).toISOString(), labels: ["Warm"], avatar_url: null, unread_count: 0, has_alert: false },
-  { id: "5", name: "Beta <> Periskope", project: "Clients", members_count: 6, last_active: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString(), labels: ["High Value", "Pilot"], avatar_url: null, unread_count: 3, has_alert: false },
-  { id: "6", name: "Gamma <> Skope", project: "Internal", members_count: 10, last_active: new Date(Date.now() - 30 * 60 * 1000).toISOString(), labels: ["Priority", "Warm"], avatar_url: null, unread_count: 5, has_alert: false },
-  { id: "7", name: "Delta <> Periskope", project: "Clients", members_count: 7, last_active: new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString(), labels: ["Pilot"], avatar_url: null, unread_count: 12, has_alert: false },
-  { id: "8", name: "Epsilon <> Skope", project: "Demo", members_count: 3, last_active: new Date(Date.now() - 4 * 60 * 60 * 1000).toISOString(), labels: ["Warm"], avatar_url: null, unread_count: 0, has_alert: true },
-  { id: "9", name: "Zeta <> Periskope", project: "Internal", members_count: 9, last_active: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString(), labels: ["High Value"], avatar_url: null, unread_count: 2, has_alert: false },
-  { id: "10", name: "Eta <> Skope", project: "Clients", members_count: 5, last_active: new Date(Date.now() - 6 * 60 * 60 * 1000).toISOString(), labels: ["Priority", "1+"], avatar_url: null, unread_count: 6, has_alert: false },
+  { id: "1", name: "Evoke <> Skope", project: "Demo", members_count: 3, last_active: new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString(), labels: ["High Value", "Priority", "Warm"], avatar_url: logoUrl("evoke-skope"), unread_count: 10, has_alert: false },
+  { id: "2", name: "Xindus Trade Network <> Periskope", project: "Clients", members_count: 8, last_active: new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString(), labels: [], avatar_url: logoUrl("xindus"), unread_count: 17, has_alert: false },
+  { id: "3", name: "TBC <> Periskope", project: "Demo", members_count: 5, last_active: new Date(Date.now() - 3 * 60 * 60 * 1000).toISOString(), labels: [], avatar_url: logoUrl("tbc"), unread_count: 8, has_alert: true },
+  { id: "4", name: "Alpha <> Skope", project: "Demo", members_count: 4, last_active: new Date(Date.now() - 5 * 60 * 60 * 1000).toISOString(), labels: ["Pilot", "Priority", "Warm"], avatar_url: logoUrl("alpha-skope"), unread_count: 0, has_alert: false },
+  { id: "5", name: "Beta <> Periskope", project: "Clients", members_count: 6, last_active: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString(), labels: [], avatar_url: logoUrl("beta"), unread_count: 3, has_alert: false },
+  { id: "6", name: "Gamma <> Skope", project: "Internal", members_count: 10, last_active: new Date(Date.now() - 30 * 60 * 1000).toISOString(), labels: ["Pilot"], avatar_url: logoUrl("gamma"), unread_count: 5, has_alert: false },
+  { id: "7", name: "Delta <> Periskope", project: "Clients", members_count: 7, last_active: new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString(), labels: [], avatar_url: logoUrl("delta"), unread_count: 12, has_alert: false },
+  { id: "8", name: "Epsilon <> Skope", project: "Demo", members_count: 3, last_active: new Date(Date.now() - 4 * 60 * 60 * 1000).toISOString(), labels: [], avatar_url: logoUrl("epsilon"), unread_count: 0, has_alert: true },
+  { id: "9", name: "Zeta <> Periskope", project: "Internal", members_count: 9, last_active: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString(), labels: [], avatar_url: logoUrl("zeta"), unread_count: 2, has_alert: false },
+  { id: "10", name: "Eta <> Skope", project: "Clients", members_count: 5, last_active: new Date(Date.now() - 6 * 60 * 60 * 1000).toISOString(), labels: ["Priority"], avatar_url: logoUrl("eta"), unread_count: 6, has_alert: false },
 ];
 
 export type GroupsResult = { groups: Group[]; source: "supabase" | "mock" };

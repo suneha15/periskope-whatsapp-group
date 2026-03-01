@@ -1,18 +1,14 @@
 "use client";
 
 import { formatLastActive } from "@/lib/format";
+import { defaultProjectClass, getLabelDotClass, projectChipClasses } from "@/lib/chipColors";
 import type { Group } from "@/types/group";
-
-const projectColors: Record<string, string> = {
-  Demo: "bg-blue-100 text-blue-800 dark:bg-blue-900/40 dark:text-blue-200",
-  Clients: "bg-amber-100 text-amber-800 dark:bg-amber-900/40 dark:text-amber-200",
-  Internal: "bg-zinc-100 text-zinc-800 dark:bg-zinc-700 dark:text-zinc-200",
-};
+import { GroupAvatar } from "@/components/GroupAvatar";
 
 function ProjectPill({ project }: { project: string }) {
-  const className = projectColors[project] ?? "bg-zinc-100 text-zinc-700 dark:bg-zinc-700 dark:text-zinc-300";
+  const className = projectChipClasses[project] ?? defaultProjectClass;
   return (
-    <span className={`inline-flex rounded-full px-2 py-0.5 text-xs font-medium ${className}`}>
+    <span className={`inline-flex shrink-0 rounded-full px-2 py-0.5 text-xs font-medium whitespace-nowrap ${className}`}>
       # {project}
     </span>
   );
@@ -31,7 +27,7 @@ export default function GroupsTable({
     <div className="flex flex-1 flex-col overflow-hidden">
       <div className="flex shrink-0 items-center justify-between gap-4 border-b border-zinc-200 bg-white px-4 py-3 dark:border-zinc-800 dark:bg-zinc-950">
         <div className="flex items-center gap-2">
-          <div className="flex h-9 min-w-[10rem] items-center gap-2 rounded-lg border border-zinc-200 bg-zinc-50 px-3 dark:border-zinc-600 dark:bg-zinc-800">
+          <div className="flex h-9 min-w-[10rem] items-center gap-2 rounded border border-zinc-200 bg-zinc-50 px-3 dark:border-zinc-600 dark:bg-zinc-800">
             <svg className="h-4 w-4 shrink-0 text-zinc-400 dark:text-zinc-500" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" aria-hidden>
               <path strokeLinecap="round" strokeLinejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
             </svg>
@@ -55,7 +51,7 @@ export default function GroupsTable({
         <div className="flex items-center gap-2">
           <button
             type="button"
-            className="flex h-9 items-center rounded-lg bg-emerald-600 px-3 text-sm font-medium text-white hover:bg-emerald-700"
+            className="flex h-9 items-center rounded-lg bg-brand px-3 text-sm font-medium text-white hover:bg-brand-hover"
           >
             Bulk message
           </button>
@@ -82,7 +78,7 @@ export default function GroupsTable({
               <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-zinc-500 dark:text-zinc-400">
                 Project
               </th>
-              <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-zinc-500 dark:text-zinc-400">
+              <th className="min-w-[7rem] px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-zinc-500 dark:text-zinc-400">
                 Labels
               </th>
               <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-zinc-500 dark:text-zinc-400">
@@ -109,7 +105,7 @@ export default function GroupsTable({
                     }
                   }}
                   className={`cursor-pointer border-b border-zinc-100 transition-colors hover:bg-zinc-50 dark:border-zinc-800 dark:hover:bg-zinc-900/50 ${
-                    isSelected ? "bg-emerald-50 dark:bg-emerald-900/20" : "bg-white dark:bg-zinc-950"
+                    isSelected ? "bg-brand/10 dark:bg-brand/20" : "bg-white dark:bg-zinc-950"
                   }`}
                 >
                   <td className="w-10 px-4 py-2">
@@ -122,15 +118,13 @@ export default function GroupsTable({
                   </td>
                   <td className="px-4 py-2">
                     <div className="flex items-center gap-3">
-                      <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-zinc-200 text-lg dark:bg-zinc-700">
-                        👥
-                      </div>
+                      <GroupAvatar group={group} size="md" />
                       <div className="flex min-w-0 items-center gap-2">
                         <span className="truncate font-medium text-zinc-900 dark:text-zinc-50">
                           {group.name}
                         </span>
                         {group.unread_count > 0 && (
-                          <span className="flex h-5 min-w-[1.25rem] items-center justify-center rounded-full bg-emerald-500 px-1.5 text-xs font-medium text-white">
+                          <span className="flex h-5 min-w-[1.25rem] items-center justify-center rounded-full bg-brand px-1.5 text-xs font-medium text-white">
                             {group.unread_count > 99 ? "99+" : group.unread_count}
                           </span>
                         )}
@@ -143,19 +137,21 @@ export default function GroupsTable({
                   <td className="px-4 py-2">
                     <ProjectPill project={group.project} />
                   </td>
-                  <td className="px-4 py-2">
-                    <div className="flex flex-wrap gap-1">
+                  <td className="min-w-0 px-4 py-2 align-top">
+                    <div className="flex flex-wrap gap-1.5">
                       {group.labels.slice(0, 3).map((label) => (
                         <span
                           key={label}
-                          className="inline-flex items-center gap-1 rounded-full bg-zinc-100 px-2 py-0.5 text-xs text-zinc-600 dark:bg-zinc-700 dark:text-zinc-300"
+                          className="inline-flex shrink-0 max-w-[6rem] items-center gap-1 rounded-full bg-zinc-100 px-2 py-0.5 text-xs font-medium text-zinc-900 whitespace-nowrap dark:bg-zinc-800 dark:text-zinc-100"
                         >
-                          <span className="h-1.5 w-1.5 rounded-full bg-zinc-500" />
-                          {label.length > 6 ? `${label.slice(0, 6)}…` : label}
+                          <span className={`h-1.5 w-1.5 shrink-0 rounded-full ${getLabelDotClass(label)}`} />
+                          <span className="min-w-0 truncate">{label}</span>
                         </span>
                       ))}
                       {group.labels.length > 3 && (
-                        <span className="text-xs text-zinc-500">+{group.labels.length - 3}</span>
+                        <span className="inline-flex shrink-0 items-center rounded-full bg-zinc-100 px-2 py-0.5 text-xs font-medium text-zinc-900 dark:bg-zinc-800 dark:text-zinc-400">
+                          +{group.labels.length - 3}
+                        </span>
                       )}
                     </div>
                   </td>
@@ -173,14 +169,22 @@ export default function GroupsTable({
       </div>
 
       <div className="flex shrink-0 items-center gap-2 border-t border-zinc-200 px-4 py-2 text-sm text-zinc-500 dark:border-zinc-800 dark:text-zinc-400">
+        <button
+          type="button"
+          className="flex h-8 w-8 items-center justify-center rounded border border-zinc-200 bg-zinc-100 text-zinc-600 hover:bg-zinc-200 dark:border-zinc-600 dark:bg-zinc-800 dark:text-zinc-400 dark:hover:bg-zinc-700"
+          aria-label="Previous page"
+        >
+          &lt;
+        </button>
         <span>1 of 6</span>
-        <span>{groups.length} rows</span>
-        <button type="button" className="ml-2 rounded p-1 hover:bg-zinc-100 dark:hover:bg-zinc-800">
-          ←
+        <button
+          type="button"
+          className="flex h-8 w-8 items-center justify-center rounded border border-zinc-200 bg-zinc-100 text-zinc-600 hover:bg-zinc-200 dark:border-zinc-600 dark:bg-zinc-800 dark:text-zinc-400 dark:hover:bg-zinc-700"
+          aria-label="Next page"
+        >
+          &gt;
         </button>
-        <button type="button" className="rounded p-1 hover:bg-zinc-100 dark:hover:bg-zinc-800">
-          →
-        </button>
+        <span className="ml-2">{groups.length} rows</span>
       </div>
     </div>
   );
